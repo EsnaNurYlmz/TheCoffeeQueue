@@ -13,6 +13,5 @@ struct Coffee {
 }
 
 struct Campaign {
-    let title: String
     let imageName: String
 }
