@@ -10,7 +10,8 @@ import UIKit
 class ProductViewController: UIViewController {
     
     private let CategoryCollectionView : UICollectionView
-    var selectedSubCategory: SubCategory
+    
+    var selectedSubCategory: SubCategory?
     var products : [Product] = []
     
     init(selectedSubCategory: SubCategory) {
@@ -45,12 +46,13 @@ class ProductViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        title = selectedSubCategory.SubName
-        products = selectedSubCategory.products
+        title = selectedSubCategory!.SubName
+        products = selectedSubCategory!.products
         
         CategoryCollectionView.delegate = self
         CategoryCollectionView.dataSource = self
         setupSubCategoryCollectionView()
+        fetchProduct()
         
     }
     
@@ -63,8 +65,31 @@ class ProductViewController: UIViewController {
             subCategoryCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    private func fetchProduct() {
+        guard let category = selectedSubCategory?.SubId else {return}
+        let urlString = " "
+        guard let url = URL(string: urlString) else {return}
+        URLSession.shared.dataTask(with: url) { data, _ , error in
+            if let error = error {
+                print("Event Fetch Error: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data else {
+                print("No data for events")
+                return
+            }
+            do {
+                let fetchedProducts = try JSONDecoder().decode([Product].self, from: data)
+                DispatchQueue.main.async {
+                    self.products = fetchedProducts
+                    self.CategoryCollectionView.reloadData()
+                }
+            }catch {
+                print("Event JSON Decode Error: \(error.localizedDescription)")
+            }
+        }.resume()
+    }
 }
-
 extension ProductViewController : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

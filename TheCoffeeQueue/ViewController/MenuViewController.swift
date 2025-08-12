@@ -11,7 +11,7 @@ class MenuViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private var categories: [Category] = []
+    var categories: [Category] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

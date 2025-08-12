@@ -52,8 +52,8 @@ class ProductsCollectionViewCell: UICollectionViewCell {
        }
     
     func configure(with product: Product) {
-            nameLabel.text = product.ProductName
-            if let url = URL(string: product.imageUrl) {
+            nameLabel.text = product.ProductName!
+            if let url = URL(string: product.imageUrl!) {
                 // Basit image load (örn. URLSession ile)
                 DispatchQueue.global().async {
                     if let data = try? Data(contentsOf: url) {

@@ -49,8 +49,8 @@ class SubCategoryTableViewCell: UITableViewCell {
         }
 
         func configure(with subcategory: SubCategory) {
-            titleLabel.text = subcategory.SubName
-            if let url = URL(string: subcategory.imageUrl) {
+            titleLabel.text = subcategory.SubName!
+            if let url = URL(string: subcategory.imageUrl!) {
                 DispatchQueue.global().async {
                     if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                         DispatchQueue.main.async {

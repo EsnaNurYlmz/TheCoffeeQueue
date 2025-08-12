@@ -8,40 +8,43 @@
 import Foundation
 
 struct Product: Codable {
-    let id: String
-    let ProductName: String
-    let price: Double
-    let imageUrl: String
+    let id: String?
+    let ProductName: String?
+    let imageUrl: String?
+    let description : String?
     
-    init(id: String, ProductName: String, price: Double, imageUrl: String) {
+    
+    init(id: String, ProductName: String, imageUrl: String,description : String) {
         self.id = id
         self.ProductName = ProductName
-        self.price = price
         self.imageUrl = imageUrl
+        self.description = description
     }
 }
 
 struct SubCategory: Codable {
-    let id: String
-    let SubName: String
-    let imageUrl: String
+    let SubId: String?
+    let SubName: String?
+    let imageUrl: String?
+    let price: String?
     let products: [Product]
     
-    init(id: String, SubName: String, imageUrl: String, products: [Product]) {
-        self.id = id
+    init(SubId: String, SubName: String, imageUrl: String, price: String,products: [Product]) {
+        self.SubId = SubId
         self.SubName = SubName
         self.imageUrl = imageUrl
         self.products = products
+        self.price = price
     }
 }
 
 struct Category: Codable {
-    let id: String
-    let title: String
+    let categoryId: String?
+    let title: String?
     let subcategories: [SubCategory]
     
-    init(id: String, title: String, subcategories: [SubCategory]) {
-        self.id = id
+    init(categoryId: String, title: String, subcategories: [SubCategory]) {
+        self.categoryId = categoryId
         self.title = title
         self.subcategories = subcategories
     }
